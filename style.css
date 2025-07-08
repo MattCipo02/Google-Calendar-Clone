@@ -312,9 +312,14 @@ header {
     }
 
     .day, .day-name {
+        position: relative;
         min-height: auto;
         padding: 4px 4px;
         font-size: 0.5rem;
+    }
+
+    .date-number {
+        margin-bottom: 0px;
     }
 
     .event{
@@ -328,15 +333,20 @@ header {
     }
 
     .day-overlay{
-        opacity: 1;
+        position: absolute;
+        top: 0px;
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        padding: 0 2px;
+        z-index: 2;
     }
 
     #addEventBtn::before {
         content: '+';
-        font-size: 1rem;
+        font-size: 12px;
         padding: 0px;
         margin: 0px;
         color: var(--primary-dark);
@@ -344,9 +354,9 @@ header {
 
     #editEventBtn::before {
         content: '✏️';
-        font-size: 0.6rem;
+        font-size: 8px;
         padding: 0px;
-        margin: 1px;
+        margin: 0px;
     }
 
     .overlay-btn {
