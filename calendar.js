@@ -244,14 +244,13 @@ let newColor = oldColor;
 const colorInput = document.getElementById('color');
 
 colorInput.addEventListener('change', function () {
-    oldColor = newColor;         // salva il colore precedente
-    newColor = this.value;       // aggiorna con il colore appena selezionato
+    oldColor = newColor;     
+    newColor = this.value;   
 
     document.getElementById('colorPreview').style.backgroundColor = newColor;
 
     if (oldColor !== newColor) {
         console.log('Color changed from', oldColor, 'to', newColor);
-        // Qui NON possiamo forzare la chiusura del color picker via JS
     }
 });
 
