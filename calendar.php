@@ -16,14 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'add')
     $end = trim($_POST['end_date'] ?? '');
     $startTime = trim($_POST['start_time'] ?? '');
     $endTime = trim($_POST['end_time'] ?? '');
+    $color = trim($_POST['color'] ?? '');
 
     $date1 = new DateTime($start . 'T' . $startTime);
     $date2 = new DateTime($end . 'T' . $endTime);
 
     if ($event && $stakeholder && $date1 <= $date2) {
         // Prepare and execute the SQL statement to insert the event
-        $stmt = $conn->prepare("INSERT INTO events (event_name, stakeholder_name, start_date, end_date, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $event, $stakeholder, $start, $end, $startTime, $endTime);
+        $stmt = $conn->prepare("INSERT INTO events (event_name, stakeholder_name, start_date, end_date, start_time, end_time, color) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $event, $stakeholder, $start, $end, $startTime, $endTime, $color);
         
         $stmt->execute();
         
@@ -46,14 +47,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'edit')
     $end = trim($_POST['end_date'] ?? '');
     $startTime = trim($_POST['start_time'] ?? '');
     $endTime = trim($_POST['end_time'] ?? '');
+    $color = trim($_POST['color'] ?? ''); 
 
     $date1 = new DateTime($start . 'T' . $startTime);
     $date2 = new DateTime($end . 'T' . $endTime);
 
     if ($id && $event && $stakeholder && $date1 <= $date2) {
         // Prepare and execute the SQL statement to update the event
-        $stmt = $conn->prepare("UPDATE events SET event_name = ?, stakeholder_name = ?, start_date = ?, end_date = ?, start_time = ?, end_time = ? WHERE id = ?");
-        $stmt->bind_param("ssssssi", $event, $stakeholder, $start, $end, $startTime, $endTime, $id);
+        $stmt = $conn->prepare("UPDATE events SET event_name = ?, stakeholder_name = ?, start_date = ?, end_date = ?, start_time = ?, end_time = ?, color = ? WHERE id = ?");
+        $stmt->bind_param("sssssssi", $event, $stakeholder, $start, $end, $startTime, $endTime, $color, $id);
         
         $stmt->execute();
         
@@ -116,7 +118,8 @@ if ($result && $result->num_rows > 0) {
                 'start' => $row['start_date'],
                 'end' => $row['end_date'],
                 'start_time' => $row['start_time'],
-                'end_time' => $row['end_time']
+                'end_time' => $row['end_time'],
+                'color' => $row['color']
             ];
             $start->modify('+1 day'); // Increment by one day
         }

@@ -75,6 +75,13 @@ include 'calendar.php';
                     <label for="endTime">End time:</label>
                     <input type="time" name="end_time" id="endTime" required>
 
+                    <label for="color">Color:</label>
+                    <div class="custom-color-wrapper">
+                        <input type="color" name="color" id="color" required>
+                        <div id="colorPreview"></div>
+                    </div>
+
+
                     <button type="submit">✅ Save</button>
                 </form>
 

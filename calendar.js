@@ -52,6 +52,8 @@ function renderCalendar(date = new Date()) {
         eventToday.forEach(event => {
             const ev = document.createElement('div');
             ev.className = 'event';
+            console.log(event.color||'error')
+            ev.style.backgroundColor = event.color || '';
 
             const eventEl = document.createElement('div');
             eventEl.className = 'event_title';
@@ -116,6 +118,14 @@ function openModalForAdd(dateStr){
     document.getElementById('endDate').value = dateStr;
     document.getElementById('startTime').value = '09:00';
     document.getElementById('endTime').value = '10:00';
+    document.getElementById('color').value = '#3b82f6'; 
+
+    // Update the color preview
+    const colorPreview = document.getElementById('colorPreview');
+    if (colorPreview) {
+        colorPreview.style.backgroundColor = document.getElementById('color').value;
+        colorPreview.style.display = 'block';
+    }
 
     const selector = document.getElementById('eventSelector');
     const wrapper = document.getElementById('eventSelectorWrapper');
@@ -162,6 +172,14 @@ function openModalForEdit(eventsOnDate) {
     document.getElementById('endDate').value = event_selected.end || '';
     document.getElementById('startTime').value = event_selected.start_time || '';
     document.getElementById('endTime').value = event_selected.end_time || '';
+    document.getElementById('color').value = event_selected.color || ''; 
+
+    // Update the color preview
+    const colorPreview = document.getElementById('colorPreview');
+    if (colorPreview) {
+        colorPreview.style.backgroundColor = document.getElementById('color').value;
+        colorPreview.style.display = 'block';
+    }
 
     // Handle the selection of an event from the dropdown
     selector.onchange = function() {
@@ -187,6 +205,7 @@ function handleEventSelection(eventJSON) {
     document.getElementById('endDate').value = e.end || '';
     document.getElementById('startTime').value = e.start_time || '';
     document.getElementById('endTime').value = e.end_time || '';
+    document.querySelector('.modal-content').scrollTop = 0;
 }
 
 function closeModal() {
@@ -217,3 +236,23 @@ document.getElementById('prevMonth').addEventListener('click', () => changeMonth
 document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
 
 document.getElementById('cancelBtn').addEventListener('click', closeModal);
+
+
+let oldColor = document.getElementById('color').value; // colore iniziale all'avvio
+let newColor = oldColor;
+
+const colorInput = document.getElementById('color');
+
+colorInput.addEventListener('change', function () {
+    oldColor = newColor;         // salva il colore precedente
+    newColor = this.value;       // aggiorna con il colore appena selezionato
+
+    document.getElementById('colorPreview').style.backgroundColor = newColor;
+
+    if (oldColor !== newColor) {
+        console.log('Color changed from', oldColor, 'to', newColor);
+        // Qui NON possiamo forzare la chiusura del color picker via JS
+    }
+});
+
+
